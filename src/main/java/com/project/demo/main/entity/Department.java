@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="department")
 public class Department {
@@ -29,15 +31,27 @@ public class Department {
 	@Column(name="speciality")
 	private String speciality;
 	
-
-
 	@ManyToOne
 	@JoinColumn(name="factory_id")
-	private Factory factor;
+	private Factory factory;
 	
-	@OneToMany()
-	@JoinColumn(name="department_id")
-	private List<Employee> employees;
+	/*
+	 * @OneToMany
+	 * 
+	 * @JoinColumn(name="department_id")
+	 * 
+	 * @JsonIgnore private List<Employee> employees;
+	 */
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 	public String getName() {
 		return name;
@@ -58,23 +72,31 @@ public class Department {
 	public Department() {
 		
 	}
+	
 
 	
 
-	public Department(String name, String speciality, Factory factor, List<Employee> employees) {
-		this.name = name;
-		this.speciality = speciality;
-		this.factor = factor;
-		this.employees = employees;
+	public Factory getFactory() {
+		return factory;
 	}
 
-	public void add(Employee employee) {
-		if(employees == null) {
-			employees = new ArrayList<>();
-		}
-		
-		employees.add(employee);
+	public void setFactory(Factory factory) {
+		this.factory = factory;
 	}
+
+	public Department(String name, String speciality, Factory factor/* , List<Employee> employees */) {
+		this.name = name;
+		this.speciality = speciality;
+		this.factory = factor;
+		//this.employees = employees;
+	}
+
+	/*
+	 * public void add(Employee employee) { if(employees == null) { employees = new
+	 * ArrayList<>(); }
+	 * 
+	 * employees.add(employee); }
+	 */
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", name=" + name + ", speciality=" + speciality + "]";

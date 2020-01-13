@@ -2,6 +2,8 @@ package com.project.demo.main.entity;
 
 
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,43 +13,57 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="shift")
-public class Shift {
+public class Shift implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="shift_id")
-	private int id;
+	private int shift_id;
 	
-	@Column(name="from")
-	private int from;
+	@Column(name="shift_from")
+	private int shift_from;
 	
-	@Column(name="to")
-	private int to;
+	@Column(name="shift_to")
+	private int shift_to;
 	
 	@Column(name="working_days")
-	private int workingDays;
+	private int working_days;
 
-	public int getFrom() {
-		return from;
+	
+	public int getShift_id() {
+		return shift_id;
 	}
 
-	public void setFrom(int from) {
-		this.from = from;
+	public void setShift_id(int id) {
+		this.shift_id = id;
 	}
 
-	public int getTo() {
-		return to;
+	public int getShift_from() {
+		return shift_from;
 	}
 
-	public void setTo(int to) {
-		this.to = to;
+	public void setShift_from(int from) {
+		this.shift_from = from;
 	}
 
-	public int getWorkingDays() {
-		return workingDays;
+	public int getShift_to() {
+		return shift_to;
 	}
 
-	public void setWorkingDays(int workingDays) {
-		this.workingDays = workingDays;
+	public void setShift_to(int to) {
+		this.shift_to = to;
+	}
+
+	public int getWorking_days() {
+		return working_days;
+	}
+
+	public void setWorking_days(int workingDays) {
+		this.working_days = workingDays;
 	}
 
 	public Shift() {
@@ -55,14 +71,14 @@ public class Shift {
 	}
 
 	public Shift(int from, int to, int workingDays) {
-		this.from = from;
-		this.to = to;
-		this.workingDays = workingDays;
+		this.shift_from = from;
+		this.shift_to = to;
+		this.working_days = workingDays;
 	}
 
 	@Override
 	public String toString() {
-		return "Shift [id=" + id + ", from=" + from + ", to=" + to + ", daysNumber=" + workingDays + "]";
+		return "Shift [shift_id=" + shift_id + ", shift_from=" + shift_from + ", shift_to=" + shift_to + ", daysNumber=" + working_days + "]";
 	}
 	
 

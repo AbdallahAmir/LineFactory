@@ -16,7 +16,7 @@ public class Factory {
 	private int id;
 	
 	@Column(name="factory_name")
-	private String name;
+	private String factory_name;
 	
 	@Column(name="buildings")
 	private int buildings;
@@ -30,15 +30,27 @@ public class Factory {
 	@Column(name="location")
 	private String location;
 	
-	@Column(name="ownername")
-	private String ownerName;
+	@Column(name="owenrname")
+	private String owenrname;
 
-	public String getName() {
-		return name;
+
+
+	
+	
+	public int getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFactory_name() {
+		return factory_name;
+	}
+
+	public void setFactory_name(String name) {
+		this.factory_name = name;
 	}
 
 	public int getBuildings() {
@@ -74,30 +86,31 @@ public class Factory {
 	}
 
 	public String getOwnerName() {
-		return ownerName;
+		return owenrname;
 	}
 
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
+	public void setOwnerName(String owenrname) {
+		this.owenrname = owenrname;
 	}
+	
 
 	public Factory() {
 		
 	}
 
-	public Factory(String name, int buildings, int floors, String industry, String location, String ownerName) {
-		this.name = name;
+	public Factory(String name, int buildings, int floors, String industry, String location, String owenrname) {
+		this.factory_name = name;
 		this.buildings = buildings;
 		this.floors = floors;
 		this.industry = industry;
 		this.location = location;
-		this.ownerName = ownerName;
+		this.owenrname = owenrname;
 	}
 
 	@Override
 	public String toString() {
-		return "Factory [id=" + id + ", name=" + name + ", buildings=" + buildings + ", floors=" + floors
-				+ ", industries=" + industry + ", location=" + location + ", ownerName=" + ownerName + "]";
+		return "Factory [id=" + id + ", factory_name=" + factory_name + ", buildings=" + buildings + ", floors=" + floors
+				+ ", industries=" + industry + ", location=" + location + ", ownerName=" + owenrname + "]";
 	}
 	
 	

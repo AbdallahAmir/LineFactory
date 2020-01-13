@@ -11,23 +11,18 @@ import com.project.demo.main.dao.EmployeeRepository;
 import com.project.demo.main.entity.Employee;
 
 @Service
-public class EmployeeServiceImpli implements EmployeeService {
-    
+public class EmployeeServices  {
+	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	@Autowired
-	public EmployeeServiceImpli(EmployeeRepository employeeRepository) {
-		this.employeeRepository = employeeRepository;
-	}
-
-	@Override
+	
+	
 	@Transactional
 	public List<Employee> findAll() {
 		// TODO Auto-generated method stub
 		return employeeRepository.findAll();
 	}
 
-	@Override
 	@Transactional
 	public Employee findById(int theId) {
 		
@@ -39,18 +34,36 @@ public class EmployeeServiceImpli implements EmployeeService {
 		return myEmployee;
 	}
 
-	@Override
 	@Transactional
-	public void save(Employee theEmployee) {
-		employeeRepository.save(theEmployee);
-
+	public List<String> selectDepartmentEmployees(String department_name){
+		return employeeRepository.selectDepartmentEmployees(department_name);
 	}
-
-	@Override
+	
 	@Transactional
 	public void deleteById(int theId) {
 	employeeRepository.deleteById(theId);
 
 	}
 
-}
+
+	public void addEmployee(Employee employee) {
+			employeeRepository.save(employee);
+		}
+
+	public Employee login(String email,String password) {
+		return adminLogin(email, password);
+	}
+
+	public Employee adminLogin(String email,String password) {
+		
+		return employeeRepository.adminLogin(email, password);
+	}
+    public Employee managerLogin(String email,String password) {
+		
+		return employeeRepository.managerLogin(email, password);
+	}
+
+		
+	}
+
+

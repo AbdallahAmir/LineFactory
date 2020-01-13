@@ -1,17 +1,10 @@
 package com.project.demo.main.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,17 +26,15 @@ public class Product {
 	@Column(name="target")
 	private int target;
 	
-	  @ManyToMany(fetch=FetchType.LAZY,cascade=
-	  {CascadeType.DETACH,CascadeType.MERGE ,CascadeType.PERSIST,
-	  CascadeType.REFRESH})
-	  
-	  @JoinTable(name="product_emp", joinColumns= @JoinColumn(name="product_id"),
-	  inverseJoinColumns = @JoinColumn(name="employee_id")) 
-	  @JsonIgnore
-	  private List <Employee> employees;
-	 
 	
 
+	 public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
 	public String getName() {
 		return name;
 	}
@@ -67,25 +58,21 @@ public class Product {
 	public void setTarget(int target) {
 		this.target = target;
 	}
+	
+
 
 	public Product() {
 		
 	}
 
-	public Product(String name, String type, int target) {
-		
+   
+	public Product(int id, String name, String type, int target) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.target = target;
 	}
-	
-
-	
-	  public List<Employee> getEmployees() { return employees; }
-	  
-	  public void setEmployees(List<Employee> employees) { this.employees =
-	  employees; }
-	 
 
 	@Override
 	public String toString() {

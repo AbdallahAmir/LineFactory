@@ -1,6 +1,5 @@
 package com.project.demo.main.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,11 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -28,10 +29,10 @@ public class Employee {
 	private int id;
 	
 	@Column(name="employee_name")
-	private String name;
+	private String employee_name;
 	
 	@Column(name="employee_address")
-	private String address;
+	private String employee_address;
 	
 	@Column(name="contacts")
 	private String contacts;
@@ -48,9 +49,11 @@ public class Employee {
 	
 
 	@Column(name="employee_email")
-	private String email;
+	private String employee_email;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE
 			,CascadeType.PERSIST,
 			CascadeType.REFRESH})
 	@JoinColumn(name="department_id")
@@ -62,19 +65,27 @@ public class Employee {
 	@JoinColumn(name="shift_id")
 	private Shift shift;
 	
-	  @ManyToMany(fetch=FetchType.LAZY,cascade=
-	  {CascadeType.DETACH,CascadeType.MERGE ,CascadeType.PERSIST,
-	  CascadeType.REFRESH})
-	  @JoinTable(name="product_emp", joinColumns=
-	  {@JoinColumn(name="employee_id")}, inverseJoinColumns =
-	  {@JoinColumn(name="product_id")}) 
-	  private List <Product> products;
-	 
-	  @Column(name="priority")
-	  private int priority;
+	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE
+			,CascadeType.PERSIST,
+			CascadeType.REFRESH})
+	@JoinColumn(name="product_id")
+	private Product product;
+	
+	 @OneToMany(mappedBy = "employee")
+		@JsonIgnore
+
+	 private List<Sign> signs;
 	
 	
-	  public int getId() {
+	  public List<Sign> getSigns() {
+		return signs;
+	}
+
+	public void setSigns(List<Sign> signs) {
+		this.signs = signs;
+	}
+
+	public int getId() {
 		return id;
 	}
 
@@ -82,28 +93,22 @@ public class Employee {
 		this.id = id;
 	}
 
-	public int getPriority() {
-		return priority;
+	
+
+	public String getEmployee_name() {
+		return employee_name;
 	}
 
-	public void setPriority(int priority) {
-		this.priority = priority;
+	public void setEmployee_name(String name) {
+		this.employee_name = name;
 	}
 
-	public String getName() {
-		return name;
+	public String getEmployee_address() {
+		return employee_address;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String adress) {
-		this.address = adress;
+	public void setEmployee_address(String adress) {
+		this.employee_address = adress;
 	}
 
 	public String getContacts() {
@@ -117,6 +122,20 @@ public class Employee {
 	public double getSalary() {
 		return salary;
 	}
+	
+
+	public Product getProduct() {
+		return product;
+	}
+
+
+
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+
 
 	public void setSalary(double salary) {
 		this.salary = salary;
@@ -136,12 +155,12 @@ public class Employee {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmployee_email() {
+		return employee_email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmployee_email(String email) {
+		this.employee_email = email;
 	}
 
 
@@ -154,56 +173,46 @@ public class Employee {
 	}
 	
 
+	@JsonIgnore
 	public Department getDepartment() {
 		return department;
 	}
-
+	@JsonProperty
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
+	
 
-	
-	  public List<Product> getProducts()
-	  {
-		  return products;
-		  }
-	  
-	  public void setProducts(List<Product> products)
-	  {
-		  this.products = products;
-	  }
-	   
-	  public Employee() { }
-	  
-	  
-	
-	public Employee(String name, String address, String contacts, double salary, byte[] image, String password,
-			String email, Department department, Shift shift, List<Product> products, int priority) {
-		this.name = name;
-		this.address = address;
+
+	public Employee() {
+		
+	}
+
+	public Employee(int id, String employee_name, String employee_address, String contacts, double salary, byte[] image,
+			String password, String employee_email, Department department, Shift shift, Product product,
+			List<Sign> signs) {
+		
+		this.id = id;
+		this.employee_name = employee_name;
+		this.employee_address = employee_address;
 		this.contacts = contacts;
 		this.salary = salary;
 		this.image = image;
 		this.password = password;
-		this.email = email;
+		this.employee_email = employee_email;
 		this.department = department;
 		this.shift = shift;
-		this.products = products;
-		this.priority = priority;
+		this.product = product;
+		this.signs = signs;
 	}
 
-	public void add(Product product) {
-		if(products == null) {
-			products = new ArrayList<>();
-		}
-		
-		products.add(product);
-	}
+
+
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", adress=" + address + ", contacts=" + contacts + ", salary="
-				+ salary + ", password=" + password + ", email=" + email + "]";
+		return "Employee [id=" + id + ", employee_name=" + employee_name + ", adress=" + employee_address + ", contacts=" + contacts + ", salary="
+				+ salary + ", password=" + password + ", employee_email=" + employee_email + "]";
 	}
 		
 
